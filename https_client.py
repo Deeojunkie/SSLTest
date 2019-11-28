@@ -3,14 +3,11 @@ import asyncio
 import ssl
 
 async def client():
-    CA_FILE = "./ca/ca.crt"
-    KEY_FILE = "./client/client.key"
-    CERT_FILE = "./client/client.crt"
 
     context = ssl.SSLContext(ssl.PROTOCOL_TLS)
     context.check_hostname = False
-    context.load_cert_chain(certfile=CERT_FILE, keyfile=KEY_FILE)
-    context.load_verify_locations(CA_FILE)
+    context.load_cert_chain(certfile="./client/client.crt", keyfile="./client/client.key")
+    context.load_verify_locations("./ca/ca.crt")
     context.verify_mode = ssl.CERT_REQUIRED
     try:
         # 通过request()方法创建一个请求：
@@ -24,3 +21,4 @@ async def client():
 
 if __name__ == '__main__':
     asyncio.run(client())
+
